@@ -6,13 +6,13 @@ class BankDetails {
   String address;
   String state;
   String contact;
-  bool upi;
-  bool rtgs;
+  String upi;
+  String rtgs;
   String city;
   String centre;
   String district;
-  bool neft;
-  bool imps;
+  String neft;
+  String imps;
   dynamic swift;
   String iso3166;
   String bank;
@@ -46,13 +46,13 @@ class BankDetails {
     String? address,
     String? state,
     String? contact,
-    bool? upi,
-    bool? rtgs,
+    String? upi,
+    String? rtgs,
     String? city,
     String? centre,
     String? district,
-    bool? neft,
-    bool? imps,
+    String? neft,
+    String? imps,
     dynamic swift,
     String? iso3166,
     String? bank,
@@ -109,17 +109,17 @@ class BankDetails {
       address: map['ADDRESS'] as String,
       state: map['STATE'] as String,
       contact: map['CONTACT'] as String,
-      upi: map['UPI'] as bool,
-      rtgs: map['RTGS'] as bool,
+      upi: map['UPI'] as String,
+      rtgs: map['RTGS'] as String,
       city: map['CITY'] as String,
       centre: map['CENTRE'] as String,
       district: map['DISTRICT'] as String,
-      neft: map['NEFT'] as bool,
-      imps: map['IMPS'] as bool,
+      neft: map['NEFT'] as String,
+      imps: map['IMPS'] as String,
       swift: map['SWIFT'] as dynamic,
       iso3166: map['ISO3166'] as String,
       bank: map['BANK'] as String,
-      bankcode: map['BANKCODE'] as String,
+      bankcode: map['BANKCODE'] ?? "",
       ifsc: map['IFSC'] as String,
     );
   }

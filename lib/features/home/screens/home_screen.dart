@@ -20,24 +20,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   TextEditingController ifsccontroller = TextEditingController();
   Future<void> fetchData(String ifscCode) async {
     final url = 'http://ifsc.rizad.me/?ifsc=$ifscCode';
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        print(responseData);
-        print(responseData['ADDRESS']);
-        print(responseData['BANK']);
-        print(responseData['BRANCH']);
-        print(responseData['CENTRE']);
-        setState(() {
-          bankDetails = BankDetails.fromMap(responseData);
-          // print(bankDetails!.length);
-        });
-        print('andi');
-      }
-    } catch (error) {
-      print(error.toString());
-      Text(error.toString());
+
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      print(responseData);
+      print(responseData['ADDRESS']);
+      print(responseData['UPI'].runtimeType);
+      print(responseData['BRANCH']);
+      print(responseData['CENTRE']);
+      setState(() {
+        bankDetails = BankDetails.fromMap(responseData);
+        print(bankDetails!.toMap());
+        // print(bankDetails!.length);
+      });
+      print('andi');
     }
   }
 
