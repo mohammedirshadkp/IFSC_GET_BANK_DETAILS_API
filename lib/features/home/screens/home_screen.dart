@@ -24,35 +24,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
-      print(responseData);
-      print(responseData['ADDRESS']);
-      print(responseData['UPI'].runtimeType);
-      print(responseData['BRANCH']);
-      print(responseData['CENTRE']);
       setState(() {
         bankDetails = BankDetails.fromMap(responseData);
-        print(bankDetails!.toMap());
-        // print(bankDetails!.length);
       });
-      print('andi');
     }
   }
-
-  // Future<void> fetchData(String ifscCode) async {
-  //   final url = 'http://ifsc.rizad.me/?ifsc=$ifscCode';
-  //   try {
-  //     final response = await http.get(Uri.parse(url));
-  //     if (response.statusCode == 200) {
-  //       final responseData = json.decode(response.body);
-  //       setState(() {
-  //         bankDetails = BankDetails.fromMap(
-  //             responseData); // Update the bankDetails variable
-  //       });
-  //     }
-  //   } catch (error) {
-  //     print(error.toString());
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -78,32 +54,34 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   children: [
                     SizedBox(
                       height: 120,
-                      width: double.infinity,
-                      child: Card(
-                        color: Palette.cardColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(defaultPadding),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Enter IFSC code",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              TextFormField(
-                                controller: ifsccontroller,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Palette.scaffoldBackgorundColor),
-                                  ),
+                      // width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(defaultPadding),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Enter IFSC code",
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            TextFormField(
+                              style: TextStyle(color: Colors.white),
+                              controller: ifsccontroller,
+                              decoration: InputDecoration(
+                                fillColor: Colors.black,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.white,
+                                      style: BorderStyle.solid,
+                                      width: 2),
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -115,14 +93,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Palette.buttonColor,
+                            backgroundColor: Colors.blueAccent,
                             fixedSize: Size(130, 50),
                           ),
                           onPressed: () {
-                            print('fffffffffffffffffffffffffffffffff');
                             fetchData(ifsccontroller.text);
-                            print('fffffffffffffffffffffffffffffffff');
-                            setState(() {});
                           },
                           child: const Text(
                             "Search",
@@ -134,30 +109,63 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 600,
+                    Container(
+                      height: 650,
+                      color: Palette.scaffoldBackgorundColor,
                       child: Card(
+                          color: Palette.scaffoldBackgorundColor,
                           child: bankDetails != null
                               ? ListView(
+                                  physics: const ScrollPhysics(
+                                    parent: BouncingScrollPhysics(
+                                        decelerationRate:
+                                            ScrollDecelerationRate.normal),
+                                  ),
                                   children: [
-                                    DetailsTile(bankDetails!.bank),
-                                    DetailsTile(bankDetails!.branch),
-                                    DetailsTile(bankDetails!.address),
-                                    DetailsTile(bankDetails!.state),
-                                    DetailsTile(bankDetails!.city),
-                                    DetailsTile(bankDetails!.bankcode),
-                                    DetailsTile(bankDetails!.centre),
-                                    DetailsTile(bankDetails!.contact),
-                                    DetailsTile(bankDetails!.district),
-                                    DetailsTile(bankDetails!.ifsc),
-                                    DetailsTile(bankDetails!.iso3166),
-                                    DetailsTile(bankDetails!.micr),
-                                    DetailsTile(bankDetails!.imps.toString()),
-                                    DetailsTile(bankDetails!.neft.toString()),
-                                    DetailsTile(bankDetails!.rtgs.toString()),
-                                    DetailsTile(bankDetails!.upi.toString()),
-                                    DetailsTile(bankDetails!.swift),
+                                    DetailsTile(
+                                        data: bankDetails!.bank, title: "bank"),
+                                    DetailsTile(
+                                        data: bankDetails!.branch,
+                                        title: "branch"),
+                                    DetailsTile(
+                                        data: bankDetails!.address,
+                                        title: "address"),
+                                    DetailsTile(
+                                        data: bankDetails!.state,
+                                        title: "state"),
+                                    DetailsTile(
+                                        data: bankDetails!.city, title: "city"),
+                                    DetailsTile(
+                                        data: bankDetails!.centre,
+                                        title: "centre"),
+                                    DetailsTile(
+                                        data: bankDetails!.contact,
+                                        title: "contact"),
+                                    DetailsTile(
+                                        data: bankDetails!.district,
+                                        title: "district"),
+                                    DetailsTile(
+                                        data: bankDetails!.ifsc, title: "ifsc"),
+                                    DetailsTile(
+                                        data: bankDetails!.iso3166,
+                                        title: "iso3166"),
+                                    DetailsTile(
+                                        data: bankDetails!.micr, title: "micr"),
+                                    DetailsTile(
+                                        data: bankDetails!.imps.toString(),
+                                        title: "imps"),
+                                    DetailsTile(
+                                        data: bankDetails!.neft.toString(),
+                                        title: "neft"),
+                                    DetailsTile(
+                                        data: bankDetails!.rtgs.toString(),
+                                        title: "rtgs"),
+                                    DetailsTile(
+                                        data: bankDetails!.upi.toString(),
+                                        title: "upi"),
+                                    DetailsTile(
+                                        data: bankDetails!.swift,
+                                        title: "swift"),
                                   ],
                                 )
                               : const Center(
